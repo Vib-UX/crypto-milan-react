@@ -9,15 +9,16 @@ import {
 
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { Link, useParams } from 'react-router-dom';
 import { privateKeyToAccount } from 'viem/accounts';
-import { Button } from '../../components/ui/button';
 import VerticalLinearStepper from '../../components/stepper';
+import { Button } from '../../components/ui/button';
+import StarWarsButton from '../../components/ui/startwar-btn';
 import {
     calculateDistance,
     extractCoordinates,
     getUserLocation,
 } from '../../lib/helper';
-import { useParams } from 'react-router-dom';
 import { events } from '../Events';
 const privateKey =
     '0xe1d4b11589a54870b3df94b0c20bb6dd8b3e1611123b1223f7901041e126b612';
@@ -80,12 +81,12 @@ export default function EventPage() {
     return (
         <div className="min-h-screen bg-zinc-950 text-white p-4 sm:p-8">
             <div className="max-w-4xl mx-auto">
-                <a href="/">
+                <Link to={'/events'}>
                     <Button variant="ghost" className="mb-4">
                         ← Back to Events
                     </Button>
-                </a>
-                <div className="w-full sm:w-32 h-32 sm:h-32">
+                </Link>
+                <div className="md:w-44 md:h-44 w-full h-full">
                     <img
                         src={event.thumbnail}
                         alt={event.title}
@@ -112,14 +113,21 @@ export default function EventPage() {
                             {event.platform}
                         </p>
                     )}
+                    {event.description && (
+                        <p className="text-lg mb-2">
+                            <span className="font-medium">
+                                About the event:
+                            </span>{' '}
+                            {event.description}
+                        </p>
+                    )}
                 </div>
 
-                <Button
-                    className=" animate-buttonheartbeat rounded-md bg-[#162723] px-4 py-1 text-sm font-semibold text-white"
+                <StarWarsButton
+                    title={' Verify for Event'}
                     onClick={validateUserCoordinates}
-                >
-                    Verify for Event
-                </Button>
+                />
+
                 <VerticalLinearStepper isUserInRange={isUserInRange} />
             </div>
         </div>

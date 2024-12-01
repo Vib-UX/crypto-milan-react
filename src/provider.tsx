@@ -1,8 +1,7 @@
-import React from 'react';
-import Navbar from './components/navbar';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { BuildType, OktoProvider } from 'okto-sdk-react';
 import { Toaster } from 'react-hot-toast';
+import Navbar from './components/navbar';
 
 const Provider = ({ children }: { children: any }) => {
     return (
@@ -36,7 +35,6 @@ const Provider = ({ children }: { children: any }) => {
                         },
                     }}
                 />
-                <div className="absolute top-0 bg-theme_bg w-full h-44" />
                 <Navbar />
                 {children}
             </OktoProvider>

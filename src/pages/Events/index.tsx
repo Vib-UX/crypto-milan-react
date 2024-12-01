@@ -3,6 +3,7 @@ import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/cards';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useNavigate } from 'react-router-dom';
+import StarWarsButton from '../../components/ui/startwar-btn';
 
 interface Host {
     name: string;
@@ -21,6 +22,7 @@ interface Event {
     platform?: string;
     status?: string;
     thumbnail: string;
+    description: string;
 }
 
 export const events: Event[] = [
@@ -33,6 +35,8 @@ export const events: Event[] = [
         isLive: true,
         hosts: [{ name: 'Coindcx', avatar: '/placeholder.svg' }],
         platform: 'Zoom',
+        description:
+            'This year, CoinDCX is taking the excitement to unprecedented heights as we present Unfold 24 – The Premier Multi-Chain Multi-Protocol Hackathon ✨The ultimate platform where the Web3 community unites from all corners of India and beyond',
         thumbnail:
             'https://unfoldweb3.com/_next/image?url=%2Fimages%2Fbanner-hero-2024-2.png&w=1920&q=75',
     },
@@ -49,6 +53,8 @@ export const events: Event[] = [
         ],
         location: '87, 11th Cross Rd, near Vintage Haven',
         status: 'Pending',
+        description:
+            '🌟 Welcome to the Builders House: Where BUIDLERs Takes Center Stage! 🚀 Join us for an unforgettable 2-day Builders House experience during India Blockchain Week (IBW) in the heart of Bangalore! This isn’t just an event—its your creative playground, designed for builders, by builders.',
         thumbnail:
             'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/7p/54abbeb5-85a9-4e1a-ba51-21b1fd576a2d',
     },
@@ -173,16 +179,14 @@ export default function EventsListing() {
                                                         {event.status}
                                                     </span>
                                                 ) : (
-                                                    <Button
-                                                        className="w-full sm:w-auto text-white border-zinc-700 hover:bg-zinc-800"
+                                                    <StarWarsButton
+                                                        title={'Checkout event'}
                                                         onClick={() =>
                                                             handleCheckoutEvent(
                                                                 event.slug
                                                             )
                                                         }
-                                                    >
-                                                        Checkout event
-                                                    </Button>
+                                                    />
                                                 )}
                                             </div>
                                         </div>
