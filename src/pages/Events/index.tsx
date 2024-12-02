@@ -1,10 +1,10 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { MapPin, Video } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import Chatbot from '../../components/Chatbot';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/cards';
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
-import { useNavigate } from 'react-router-dom';
 import StarWarsButton from '../../components/ui/startwar-btn';
-
 interface Host {
     name: string;
     avatar: string;
@@ -62,13 +62,13 @@ export const events: Event[] = [
 
 export default function EventsListing() {
     const navigate = useNavigate();
-
     const handleCheckoutEvent = (eventId: string) => {
         navigate(`/events/${eventId}`);
     };
 
     return (
         <div className="min-h-screen bg-zinc-950 text-white p-4 sm:p-8">
+            <Chatbot />
             <div className="max-w-4xl mx-auto">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8">
                     <h1 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-0">
