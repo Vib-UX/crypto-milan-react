@@ -21,20 +21,16 @@ const client = new SignProtocolClient(SpMode.OnChain, {
 });
 const steps = [
     {
-        label: 'Select campaign settings',
-        description: `You need to be within 500m of the event location to be able to verify`,
+        label: 'You need to be within 500m of the event location to be able to verify',
     },
     {
-        label: 'Create an ad group',
-        description: 'NFT collected successfully from booth',
+        label: 'NFT collected successfully from booth',
     },
     {
-        label: 'Create an ad',
-        description: `Attestating user details`,
+        label: 'Attesting user details',
     },
     {
-        label: 'Create an helo',
-        description: `All set!`,
+        label: 'All set!',
     },
 ];
 
@@ -48,11 +44,14 @@ export default function VerticalLinearStepper({
     const { executeRawTransaction } = useOkto() as OktoContextType;
     const [activeStep, setActiveStep] = React.useState(0);
     const [showAR, setShowAR] = React.useState(false);
+    const [signLink, setSignLink] = React.useState('');
+    const [orderId, setOrderId] = React.useState('');
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
     const handleRedeem = async () => {
+        toast.dismiss();
         toast.loading('Redeeming perks...');
         const location = await getUserLocation();
         if (!localStorage.getItem('userUsed')) {
@@ -93,6 +92,7 @@ export default function VerticalLinearStepper({
             },
         }).then(async (result: any) => {
             toast.success(`${result.orderId} orderId`);
+            setOrderId(result.orderId);
             toast.success('Perks redeemed successfully');
         });
     };
@@ -109,7 +109,7 @@ export default function VerticalLinearStepper({
     };
 
     const handleOnSign = async () => {
-        toast.loading('Pushing coordinates onchain...');
+        toast.dismiss();
         const location = await getUserLocation();
         const createSchemaRes = await client.createSchema({
             name: 'cryptoMilan',
@@ -136,6 +136,7 @@ export default function VerticalLinearStepper({
             attestationDataSchema
         );
         console.log('Attestation created:', createAttestationRes);
+        setSignLink(createAttestationRes.attestationId);
         toast.success('Coordinates pushed successfully');
         handleNext();
     };
@@ -169,17 +170,27 @@ export default function VerticalLinearStepper({
                                     ) : null
                                 }
                             >
-                                {step.label}
+                                {index === 2 && signLink ? (
+                                    <a
+                                        href={`https://testnet-scan.sign.global/attestation/onchain_evm_80002_${signLink}`}
+                                        target="_blank"
+                                    >
+                                        {step.label}
+                                    </a>
+                                ) : (
+                                    step.label
+                                )}
                             </StepLabel>
                             <StepContent>
-                                <Typography>{step.description}</Typography>
-                                {activeStep === 2 && (
+                                {activeStep === 3 && (
                                     <Box sx={{ mb: 2 }}>
                                         <Button
                                             onClick={handleRedeem}
                                             sx={{ mt: 1, mr: 1 }}
                                         >
-                                            Redeem
+                                            {orderId
+                                                ? `Redemed (order id : ${orderId}) Powered by Okto`
+                                                : `Redeem`}
                                         </Button>
                                     </Box>
                                 )}
