@@ -18,7 +18,7 @@ const Provider = ({ children }: { children: any }) => {
                 }
             >
                 <OktoProvider
-                    apiKey={'0601c20e-0298-4fbf-97cb-d62508d253c8'}
+                    apiKey={'408eaa9d-35f3-43e5-87b1-1a20c26ae1e1'}
                     buildType={BuildType.SANDBOX}
                 >
                     <Toaster
